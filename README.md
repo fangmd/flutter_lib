@@ -5,7 +5,7 @@ flutter_lib
 
 - router: 路由工具类
 - screen_adaptation: 屏幕适配
-
+- p_image_loader: 图片加载
 
 
 
