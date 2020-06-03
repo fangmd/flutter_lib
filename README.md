@@ -4,3 +4,11 @@ flutter_lib
 
 
 - router: 路由工具类
+- screen_adaptation: 屏幕适配
+
+
+
+
+```
+flutter create --template=package hello
+```
