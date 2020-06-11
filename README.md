@@ -8,6 +8,7 @@ flutter_lib
 - p_image_loader: 图片加载
 - p_widget: 基础组件
 - p_utils: 工具类
+- p_base: 基类
 
 
 ```
