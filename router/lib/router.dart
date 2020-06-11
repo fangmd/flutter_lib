@@ -36,6 +36,10 @@ class RouterUtils {
     Navigator.push(context, route);
   }
 
+  static Future<T> pushWithRoute2<T>(Route route) {
+    return navigatorKey.currentState.push<T>(route);
+  }
+
   static void pop<T>(BuildContext context, [T arguments]) {
     Navigator.pop<T>(context, arguments);
   }
