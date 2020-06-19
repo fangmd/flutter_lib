@@ -86,21 +86,17 @@ class LocalImg extends StatelessWidget {
         containerWidth != null ||
         containerHeight != null) {
       // add container
-      ret = GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          this.onTap?.call();
-        },
-        child: Container(
-          height: containerHeight,
-          width: containerWidth,
-          decoration: decoration,
-          alignment: alignment ?? Alignment.center,
-          padding: padding ?? EdgeInsets.zero,
-          child: ret,
-        ),
+      ret = Container(
+        height: containerHeight,
+        width: containerWidth,
+        decoration: decoration,
+        alignment: alignment ?? Alignment.center,
+        padding: padding ?? EdgeInsets.zero,
+        child: ret,
       );
-    } else if (this.onTap != null) {
+    }
+
+    if (this.onTap != null) {
       ret = GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
