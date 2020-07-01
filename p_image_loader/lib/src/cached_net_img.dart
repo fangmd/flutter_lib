@@ -108,7 +108,13 @@ class CachedNetImg extends StatelessWidget {
 
   Widget placeholder(BuildContext context, _) {
     if (placeHolderAssets != null) {
-      return LocalImg(placeHolderAssets, radius: radius);
+      return LocalImg(
+        placeHolderAssets,
+        radius: radius,
+        width: width,
+        height: height,
+        fit: fit,
+      );
     }
 
     if (radius != null && radius > 0) {
