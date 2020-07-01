@@ -15,6 +15,7 @@ class CachedNetImg extends StatelessWidget {
   final double height;
   final BoxFit fit;
   final Color placeHolderColor;
+  final String placeHolderAssets;
 
   /// 设置点击事件
   final VoidCallback onTap;
@@ -32,6 +33,7 @@ class CachedNetImg extends StatelessWidget {
       this.height,
       this.fit,
       this.placeHolderColor = greyF2,
+      this.placeHolderAssets,
       this.onTap,
       this.radius,
       this.padding})
@@ -105,6 +107,10 @@ class CachedNetImg extends StatelessWidget {
   }
 
   Widget placeholder(BuildContext context, _) {
+    if (placeHolderAssets != null) {
+      return LocalImg(placeHolderAssets, radius: radius);
+    }
+
     if (radius != null && radius > 0) {
       return Container(
         decoration: BoxDecoration(
