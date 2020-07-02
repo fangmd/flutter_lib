@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/text_formatter.dart';
 
 /// 通用
 /// [hint]: 默认提示内容
@@ -24,6 +25,7 @@ class MTextField extends StatefulWidget {
   final ValueChanged<String> onSubmitted;
   final Function(String) onChanged;
   final bool autofocus;
+  final List<TextInputFormatter> inputFormatters;
 
   MTextField({
     Key key,
@@ -41,6 +43,7 @@ class MTextField extends StatefulWidget {
     this.onSubmitted,
     this.onChanged,
     this.autofocus = false,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -70,6 +73,7 @@ class _MTextFieldState extends State<MTextField> {
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
+      inputFormatters: widget.inputFormatters,
       decoration: InputDecoration(
         fillColor: widget.bgColor,
         filled: true,
