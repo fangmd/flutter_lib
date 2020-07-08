@@ -46,6 +46,7 @@ Widget _buildMaterialDialogTransitions(
 class FullDialogBg extends StatelessWidget {
   final Widget child;
   final bool barrierDismissible;
+  final Color color;
 
   const FullDialogBg({Key key, this.child, this.barrierDismissible = true})
       : super(key: key);
@@ -59,7 +60,7 @@ class FullDialogBg extends StatelessWidget {
         }
       },
       child: Container(
-        color: const Color(0x4D000000),
+        color: color,
         alignment: Alignment.center,
         child: Material(child: child),
       ),
