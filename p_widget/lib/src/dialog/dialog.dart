@@ -48,7 +48,8 @@ class FullDialogBg extends StatelessWidget {
   final bool barrierDismissible;
   final Color color;
 
-  const FullDialogBg({Key key, this.child, this.barrierDismissible = true})
+  const FullDialogBg(
+      {Key key, this.child, this.barrierDismissible = true, this.color})
       : super(key: key);
 
   @override
@@ -62,7 +63,8 @@ class FullDialogBg extends StatelessWidget {
       child: Container(
         color: color,
         alignment: Alignment.center,
-        child: Material(child: child),
+        // child: Material(child: child),
+        child:child,
       ),
     );
   }
