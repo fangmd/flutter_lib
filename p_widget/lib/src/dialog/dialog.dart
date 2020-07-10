@@ -19,7 +19,9 @@ Future<T> showFullScreenDialog<T>(BuildContext context, Widget child,
   return showGeneralDialog(
     context: context,
     barrierDismissible: barrierDismissible,
-    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierLabel: MaterialLocalizations
+        .of(context)
+        .modalBarrierDismissLabel,
     transitionDuration: const Duration(milliseconds: 150),
     transitionBuilder: _buildMaterialDialogTransitions,
     pageBuilder: (BuildContext buildContext, Animation<double> animation,
@@ -29,8 +31,7 @@ Future<T> showFullScreenDialog<T>(BuildContext context, Widget child,
   );
 }
 
-Widget _buildMaterialDialogTransitions(
-    BuildContext context,
+Widget _buildMaterialDialogTransitions(BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child) {
@@ -64,10 +65,11 @@ class FullDialogBg extends StatelessWidget {
         }
       },
       child: Container(
+        color: color,
         alignment: Alignment.center,
         child: Material(
           child: child,
-          color: color,
+          color: Colors.transparent,
         ),
       ),
     );
