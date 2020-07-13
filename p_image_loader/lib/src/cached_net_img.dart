@@ -93,6 +93,8 @@ class CachedNetImg extends StatelessWidget {
       child: CachedNetworkImage(
         imageUrl: imgUrl ?? '',
         placeholder: placeholder,
+        fadeInDuration: Duration.zero,
+        fadeOutDuration: Duration.zero,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(radius)),
