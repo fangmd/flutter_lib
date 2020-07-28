@@ -26,6 +26,7 @@ class MTextField extends StatefulWidget {
   final Function(String) onChanged;
   final bool autofocus;
   final List<TextInputFormatter> inputFormatters;
+  final TextAlign textAlign;
 
   MTextField({
     Key key,
@@ -44,6 +45,7 @@ class MTextField extends StatefulWidget {
     this.onChanged,
     this.autofocus = false,
     this.inputFormatters,
+    this.textAlign=TextAlign.start,
   }) : super(key: key);
 
   @override
@@ -66,6 +68,7 @@ class _MTextFieldState extends State<MTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      textAlign: widget.textAlign,
       autofocus: widget.autofocus,
       controller: _controller,
       cursorColor: widget.cursorColor,
