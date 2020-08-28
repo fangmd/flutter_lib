@@ -27,6 +27,8 @@ class MTextField extends StatefulWidget {
   final bool autofocus;
   final List<TextInputFormatter> inputFormatters;
   final TextAlign textAlign;
+  final bool enable;
+  final bool enableInteractiveSelection;
 
   MTextField({
     Key key,
@@ -45,7 +47,9 @@ class MTextField extends StatefulWidget {
     this.onChanged,
     this.autofocus = false,
     this.inputFormatters,
-    this.textAlign=TextAlign.start,
+    this.textAlign = TextAlign.start,
+    this.enable = true,
+    this.enableInteractiveSelection = true,
   }) : super(key: key);
 
   @override
@@ -76,7 +80,9 @@ class _MTextFieldState extends State<MTextField> {
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
+      enabled: widget.enable,
       inputFormatters: widget.inputFormatters,
+      enableInteractiveSelection: widget.enableInteractiveSelection,
       decoration: InputDecoration(
         fillColor: widget.bgColor,
         filled: true,
