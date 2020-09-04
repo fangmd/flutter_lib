@@ -32,7 +32,7 @@ class RouterUtils {
   }
 
   /// 自定义跳转效果
-  static Future<T> pushWithRoute(BuildContext context, Route route) {
+  static Future<T> pushWithRoute<T>(BuildContext context, Route route) {
     return Navigator.push(context, route);
   }
 
