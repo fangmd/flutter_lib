@@ -58,10 +58,9 @@ class RouterUtils {
   }
 
   /// 启动一个新的页面，并清理所有历史栈
-  static void pushNamedAndRemoveAll2(String newRouteName) {
-    navigatorKey.currentState.pushNamedAndRemoveUntil(
-      newRouteName,
-      (_) => false,
-    );
+  static void pushNamedAndRemoveAll2<T>(String newRouteName, [T arguments]) {
+    navigatorKey.currentState.pushNamedAndRemoveUntil<T>(
+        newRouteName, (_) => false,
+        arguments: arguments);
   }
 }
