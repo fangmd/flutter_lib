@@ -28,6 +28,9 @@ class MTextField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final TextAlign textAlign;
   final bool isObscureText;
+  final bool enable;
+  final bool enableInteractiveSelection;
+
 
   MTextField({
     Key key,
@@ -47,7 +50,12 @@ class MTextField extends StatefulWidget {
     this.autofocus = false,
     this.inputFormatters,
     this.textAlign = TextAlign.start,
+
     this.isObscureText = false,
+
+    this.enable = true,
+    this.enableInteractiveSelection = true,
+
   }) : super(key: key);
 
   @override
@@ -78,7 +86,9 @@ class _MTextFieldState extends State<MTextField> {
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
+      enabled: widget.enable,
       inputFormatters: widget.inputFormatters,
+      enableInteractiveSelection: widget.enableInteractiveSelection,
       decoration: InputDecoration(
         fillColor: widget.bgColor,
         filled: true,
@@ -91,15 +101,15 @@ class _MTextFieldState extends State<MTextField> {
       style: widget.textStyle,
       onChanged: (value) {
         if (widget.limitLength == null) {
-          widget.onChanged(value);
+          widget.onChanged?.call(value);
           return;
         } else {
           if (value.length > widget.limitLength) {
             var resultStr = value.substring(0, widget.limitLength);
             _controller.text = resultStr;
-            widget.onChanged(resultStr);
+            widget.onChanged?.call(resultStr);
           } else {
-            widget.onChanged(value);
+            widget.onChanged?.call(value);
           }
         }
       },
