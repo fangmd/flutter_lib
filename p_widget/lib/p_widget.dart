@@ -7,4 +7,5 @@ export './src/simple_widget.dart';
 export './src/btn/btn.dart';
 export './src/divide_line.dart';
 export './src/dialog/dialog.dart';
+export './src/dialog/global_loading.dart';
 export './src/text_field/text_field.dart';
