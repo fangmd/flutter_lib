@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/text_formatter.dart';
+import 'package:flutter/services.dart';
 
 /// 通用
 /// [hint]: 默认提示内容
@@ -27,8 +27,10 @@ class MTextField extends StatefulWidget {
   final bool autofocus;
   final List<TextInputFormatter> inputFormatters;
   final TextAlign textAlign;
+  final bool isObscureText;
   final bool enable;
   final bool enableInteractiveSelection;
+
 
   MTextField({
     Key key,
@@ -48,8 +50,12 @@ class MTextField extends StatefulWidget {
     this.autofocus = false,
     this.inputFormatters,
     this.textAlign = TextAlign.start,
+
+    this.isObscureText = false,
+
     this.enable = true,
     this.enableInteractiveSelection = true,
+
   }) : super(key: key);
 
   @override
@@ -91,6 +97,7 @@ class _MTextFieldState extends State<MTextField> {
         border: InputBorder.none,
         contentPadding: widget.contentPadding ?? EdgeInsets.zero,
       ),
+      obscureText: widget.isObscureText,
       style: widget.textStyle,
       onChanged: (value) {
         if (widget.limitLength == null) {
