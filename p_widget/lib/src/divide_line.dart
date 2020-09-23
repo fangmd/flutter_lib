@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// 分割线
 class MDivide extends StatelessWidget {
-  static const Color DefaultColor = Color(0xFFF0F0F0);
+  static const Color DefaultColor = Color(0xFFF4F0FF);
 
   final double pad;
 
@@ -32,8 +32,17 @@ class MDivide extends StatelessWidget {
       return Container(
         margin: EdgeInsets.symmetric(vertical: pad ?? 0),
         height: double.infinity,
+        decoration: BoxDecoration(
+          color: color,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(1, 6),
+              color: Color.fromARGB(10, 0, 0, 0),
+              blurRadius: 5,
+            ),
+          ],
+        ),
         width: wei,
-        color: color,
       );
     }
     return Container(
