@@ -35,21 +35,21 @@ class MFlatButton extends StatelessWidget {
 
   final EdgeInsetsGeometry margin;
 
-  const MFlatButton(
-      {Key key,
-      this.onPressed,
-      this.enable = true,
-      this.content = '',
-      this.bgColor,
-      this.disableBgColor,
-      this.highlightColor,
-      this.disabledTextColor,
-      this.textStyle,
-      this.width,
-      this.height,
-      this.margin,
-      this.radius = 0.0})
-      : super(key: key);
+  const MFlatButton({
+    Key key,
+    this.onPressed,
+    this.enable = true,
+    this.content = '',
+    this.bgColor,
+    this.disableBgColor,
+    this.highlightColor,
+    this.disabledTextColor,
+    this.textStyle,
+    this.width,
+    this.height,
+    this.margin,
+    this.radius = 0.0,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
