@@ -1,7 +1,7 @@
 library p_webview;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export './src/data/js_data.dart';
+
+export './src/js_manager.dart';
+export './src/webview_page.dart';
+export './src/webview_utils.dart';

@@ -9,26 +9,12 @@ class JSManager {
       {Function(String shareTitle, dynamic data) addShare}) {
     return [
       JavascriptChannel(
-        name: 'CCBridge',
+        name: 'PApp',
         onMessageReceived: (JavascriptMessage message) {
           Logger.d(msg: message.message);
           try {
             final jsData = JSData.fromJson(message.message);
-            if (jsData.method == 'joinActivity') {
-            }
-
-            if (jsData.method == 'addShare') {
-              Logger.d(msg: 'addShare');
-              final type = jsData.data['type'];
-              // if (type == 'Activity') {
-              //   final activityId = int.parse(jsData.data['activityId']);
-              //   final kolImg = jsData.data['kolImg'];
-              //   final activityTitle = jsData.data['activityTitle'];
-              //   final data =
-              //       WebShareActivityData(activityId, kolImg, activityTitle);
-              //   addShare(activityTitle, data);
-              // }
-            }
+            
           } catch (e) {
             Logger.d(msg: e);
           }
