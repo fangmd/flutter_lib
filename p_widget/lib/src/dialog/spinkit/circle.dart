@@ -33,7 +33,7 @@ class _SpinKitCircleState extends State<SpinKitCircle> with SingleTickerProvider
   void initState() {
     super.initState();
 
-    _controller = (widget.controller ?? AnimationController(vsync: this, duration: widget.duration))..repeat();
+    _controller = (widget.controller ?? AnimationController(vsync: this, duration: widget.duration,))..repeat();
   }
 
   @override
