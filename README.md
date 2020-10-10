@@ -10,6 +10,7 @@ flutter_lib
 - p_utils: 工具类
 - p_base: 基类
 - p_webview: WebView (不使用)
+- p_img_compress: 图片压缩
 
 
 ```
