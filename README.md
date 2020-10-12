@@ -1,6 +1,6 @@
 flutter_lib
 
-> 项目位置和 ChiCha 项目同级
+> 项目位置和项目同级
 
 
 - router: 路由工具类
