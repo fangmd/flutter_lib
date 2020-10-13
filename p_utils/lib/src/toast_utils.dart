@@ -17,7 +17,6 @@ class ToastUtils {
       );
 
       Future.delayed(Duration(milliseconds: 1000), () {
-//        print("isShowing---->");
         isShowing = false;
       });
     }
