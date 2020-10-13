@@ -9,3 +9,4 @@ export './src/divide_line.dart';
 export './src/dialog/dialog.dart';
 export './src/dialog/global_loading.dart';
 export './src/text_field/text_field.dart';
+export './src/dialog/spinkit/circle.dart';

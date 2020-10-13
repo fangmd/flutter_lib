@@ -8,3 +8,4 @@ export './src/extentions/common_extentions.dart';
 export './src/app_info.dart';
 export './src/device_info_utils.dart';
 export './src/verify.dart';
+export './src/sp_utils.dart';
