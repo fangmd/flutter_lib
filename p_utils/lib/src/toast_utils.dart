@@ -1,14 +1,25 @@
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastUtils {
-  static void show(String msg) {
+
+  static bool isShowing = false;
+
+  static void show(String msg) async {
     if (msg == null) return;
-    Fluttertoast.showToast(
-      msg: msg,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1,
-      fontSize: 16.0,
-    );
+    if (!isShowing) {
+      isShowing = true;
+      Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        fontSize: 16.0,
+      );
+
+      Future.delayed(Duration(milliseconds: 1000), () {
+//        print("isShowing---->");
+        isShowing = false;
+      });
+    }
   }
 }
