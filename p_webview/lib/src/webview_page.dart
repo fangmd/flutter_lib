@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:screen_adaptation/screen_extension.dart';
@@ -37,6 +38,12 @@ class _WebViewPageState extends State<WebViewPage> {
   Map shareData;
   String shareTitle;
   // share end
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+  }
 
   @override
   void dispose() {
