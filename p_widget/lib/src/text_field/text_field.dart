@@ -31,7 +31,6 @@ class MTextField extends StatefulWidget {
   final bool enable;
   final bool enableInteractiveSelection;
 
-
   MTextField({
     Key key,
     this.controller,
@@ -50,12 +49,9 @@ class MTextField extends StatefulWidget {
     this.autofocus = false,
     this.inputFormatters,
     this.textAlign = TextAlign.start,
-
     this.isObscureText = false,
-
     this.enable = true,
     this.enableInteractiveSelection = true,
-
   }) : super(key: key);
 
   @override
