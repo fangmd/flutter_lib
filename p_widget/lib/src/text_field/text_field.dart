@@ -103,6 +103,8 @@ class _MTextFieldState extends State<MTextField> {
           if (value.length > widget.limitLength) {
             var resultStr = value.substring(0, widget.limitLength);
             _controller.text = resultStr;
+            _controller.selection = TextSelection.fromPosition(
+                TextPosition(offset: _controller.text.length));
             widget.onChanged?.call(resultStr);
           } else {
             widget.onChanged?.call(value);

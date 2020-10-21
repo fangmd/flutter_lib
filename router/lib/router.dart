@@ -52,6 +52,15 @@ class RouterUtils {
     }
   }
 
+  /// 回退到某个页面
+  static void popUntil({BuildContext context, String name}) {
+    if (context == null) {
+      navigatorKey.currentState.popUntil(ModalRoute.withName(name));
+    } else {
+      Navigator.popUntil(context, ModalRoute.withName(name));
+    }
+  }
+
   /// 启动一个新的页面，并清理所有历史栈
   static void pushNamedAndRemoveAll(BuildContext context, String newRouteName) {
     Navigator.pushNamedAndRemoveUntil(context, newRouteName, (_) => false);
