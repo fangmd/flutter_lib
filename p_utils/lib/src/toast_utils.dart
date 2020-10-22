@@ -6,6 +6,7 @@ class ToastUtils {
 
   static void show(String msg) async {
     if (msg == null) return;
+    if (msg == '') return;
     if (!isShowing) {
       isShowing = true;
       Fluttertoast.showToast(
