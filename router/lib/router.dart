@@ -19,8 +19,8 @@ class RouterUtils {
     return Navigator.pushNamed<T>(context, routeName, arguments: arguments);
   }
 
-  static void push(BuildContext context, Widget page) {
-    Navigator.push(
+  static Future<T> push<T>(BuildContext context, Widget page) {
+    return Navigator.push<T>(
       context,
       MaterialPageRoute(builder: (_) => page),
     );
