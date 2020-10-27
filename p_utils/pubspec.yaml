@@ -11,11 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
   launch_review: ^2.0.0
-  url_launcher: ^5.7.5
+  url_launcher: ^5.7.8
   fluttertoast: ^7.1.1
   device_info: ^0.4.2+8
   package_info: ^0.4.3
-  devicelocale: ^0.3.2
+  devicelocale: ^0.3.3
   crypto: ^2.1.5
   shared_preferences: ^0.5.12
 
