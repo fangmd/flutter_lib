@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// 分割线
 class MDivide extends StatelessWidget {
-  static const Color DefaultColor = Color(0xFFF4F0FF);
+  static const Color DefaultColor = Color(0xFFEDEDED);
 
   final double pad;
 
