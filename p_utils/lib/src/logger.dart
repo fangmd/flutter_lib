@@ -9,11 +9,11 @@ class Logger {
     if (isDebug()) {
       if (msg is String) {
         final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
-        pattern.allMatches(msg).forEach((match) => debugPrint(match.group(0)));
+        pattern.allMatches(msg).forEach((match) => debugPrint('$tag==>${match.group(0)}'));
       } else if (msg is Map) {
         final text = json.encode(msg);
         final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
-        pattern.allMatches(text).forEach((match) => debugPrint(match.group(0)));
+        pattern.allMatches(text).forEach((match) => debugPrint('$tag==>${match.group(0)}'));
       } else {
         debugPrint('PUtils:$tag ==> $msg');
       }

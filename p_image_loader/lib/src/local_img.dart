@@ -42,7 +42,7 @@ class LocalImg extends StatelessWidget {
     this.height,
     this.padding,
     this.onTap,
-    this.fit,
+    this.fit = BoxFit.contain,
     this.containerWidth,
     this.containerHeight,
     this.decoration,
