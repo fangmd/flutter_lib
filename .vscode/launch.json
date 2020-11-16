@@ -1,0 +1,74 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "p_base",
+            "cwd": "p_base",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_eth",
+            "cwd": "p_eth",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_image_loader",
+            "cwd": "p_image_loader",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_img_compress",
+            "cwd": "p_img_compress",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_net",
+            "cwd": "p_net",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_rpc",
+            "cwd": "p_rpc",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_utils",
+            "cwd": "p_utils",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_webview",
+            "cwd": "p_webview",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "p_widget",
+            "cwd": "p_widget",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "router",
+            "cwd": "router",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "screen_adaptation",
+            "cwd": "screen_adaptation",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}

@@ -28,8 +28,8 @@ class RPCHttp {
   String token = 'init';
 
   /// 初始化函数
-  Future<void> init(String ip, int port) async {
-    publicKey = await rootBundle.loadString('assets/public.pem');
+  Future<void> init(String ip, int port, String publicPath) async {
+    publicKey = await rootBundle.loadString(publicPath);
 
     _sockClient = await Socket.connect(ip, port);
     print('socket client init success');
