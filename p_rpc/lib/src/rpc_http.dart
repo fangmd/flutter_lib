@@ -7,6 +7,7 @@ import 'package:messagepack/messagepack.dart';
 import 'aes.dart';
 import 'utils.dart';
 
+/// TCP + MsgPack
 class RPCHttp {
   RPCHttp._();
   static final instance = RPCHttp._();
@@ -20,7 +21,7 @@ class RPCHttp {
   // token
   String token = 'init';
 
-  init(String ip, int port) async {
+  Future<void> init(String ip, int port) async {
     _sockClient = await Socket.connect(ip, port);
     print('socket client init success');
 
@@ -45,6 +46,8 @@ class RPCHttp {
   }
 
   /// pack data
+  /// 1. 使用 msgpack 序列化 map
+  /// 2. 对序列化后的数据加密
   String packData(Map<String, dynamic> params) {
     final it = params.keys;
     final body = Packer();
@@ -66,6 +69,10 @@ class RPCHttp {
     return AESUtils.instance.encryptBytes(bytes);
   }
 
+  /// 发送请求
+  /// [api] 接口地址
+  /// [params] 请求参数
+  /// [onData] 请求结果回调
   void send(String api, Map<String, dynamic> params,
       Function(Map<String, dynamic>) onData) async {
     int id = generageId();

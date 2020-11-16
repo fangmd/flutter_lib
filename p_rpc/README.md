@@ -1,14 +1,19 @@
 # p_rpc
 
-A new Flutter package project.
+TCP + MsgPack
 
-## Getting Started
+# Usage
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+```Dart
+// 初始化 Splash 页面阻塞初始化
+await RPCHttp.instance.init('172.16.20.89', 8880);
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+// 发起请求
+Map<String, dynamic> data = HashMap();
+data['time'] = 121212121;
+data['timeStr'] = '121212121';
+
+RPCHttp.instance.send('qrcode_proxy_add_qrcode', data, (ret) {
+    print(ret);
+});
+```
