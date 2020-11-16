@@ -13,6 +13,7 @@ flutter_lib
 - p_img_compress: 图片压缩
 - p_net: dio (不使用)
 - p_eth: TODO
+- p_rpc: tcp with msgpack
 
 
 ```
