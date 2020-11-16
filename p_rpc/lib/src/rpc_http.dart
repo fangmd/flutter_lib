@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart';
 import 'package:messagepack/messagepack.dart';
 
 import 'aes.dart';
@@ -18,10 +19,16 @@ class RPCHttp {
 
   Map<int, Function(Map<String, dynamic>)> _callback = HashMap();
 
+  /// 公钥加载到内存
+  String publicKey;
+
   // token
   String token = 'init';
 
+  /// 初始化函数
   Future<void> init(String ip, int port) async {
+    publicKey = await rootBundle.loadString('assets/public.pem');
+
     _sockClient = await Socket.connect(ip, port);
     print('socket client init success');
 
@@ -81,7 +88,7 @@ class RPCHttp {
     body.packString('id');
     body.packInt(id);
     body.packString('auth');
-    body.packString(await encryptRSAStr(AESUtils.instance.pk));
+    body.packString(await encryptRSAStr(publicKey, AESUtils.instance.pk));
     body.packString('api');
     body.packString(AESUtils.instance.encryptStr(api));
     body.packString('token');
