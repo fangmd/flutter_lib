@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -44,40 +45,54 @@ class RPCHttp {
     final map = u.unpackMap();
     // print(map);
     final data = AESUtils.instance.decryptBytes(map['data']);
-    map['data'] = unpack(Uint8List.fromList(data));
+
+    // msgpack
+    // map['data'] = unpackMap(Uint8List.fromList(data));
+
+    // json data
+    map['data'] = json.decode(utf8.decode(Uint8List.fromList(data)));
     print(map);
     _callback[map['id']].call(Map<String, dynamic>.from(map));
     _callback.remove(map['id']);
   }
 
   /// msgpack 反序列化
-  Map<String, dynamic> unpack(Uint8List list) {
+  Map<String, dynamic> unpackMap(Uint8List list) {
     final u = Unpacker(list);
     return Map<String, dynamic>.from(u.unpackMap());
+  }
+
+  /// msgpack 反序列化
+  List<Object> unpackList(Uint8List list) {
+    final u = Unpacker(list);
+    return u.unpackList();
   }
 
   /// pack data
   /// 1. 使用 msgpack 序列化 map
   /// 2. 对序列化后的数据加密
   String packData(Map<String, dynamic> params) {
-    final it = params.keys;
-    final body = Packer();
-    body.packMapLength(params.length);
-    for (final i in it) {
-      body.packString(i);
-      final value = params[i];
-      if (value is int) {
-        body.packInt(value);
-      } else if (params[i] is String) {
-        body.packString(value);
-      } else if (value is bool) {
-        body.packBool(value);
-      } else if (value is double) {
-        body.packDouble(value);
-      }
-    }
-    Uint8List bytes = body.takeBytes();
-    return AESUtils.instance.encryptBytes(bytes);
+    // final it = params.keys;
+    // final body = Packer();
+    // body.packMapLength(params.length);
+    // for (final i in it) {
+    //   body.packString(i);
+    //   final value = params[i];
+    //   if (value is int) {
+    //     body.packInt(value);
+    //   } else if (params[i] is String) {
+    //     body.packString(value);
+    //   } else if (value is bool) {
+    //     body.packBool(value);
+    //   } else if (value is double) {
+    //     body.packDouble(value);
+    //   }
+    // }
+    // Uint8List bytes = body.takeBytes();
+
+    // json
+    final jsonStr = json.encode(params);
+    return AESUtils.instance.encryptStr(jsonStr);
   }
 
   /// 发送请求
