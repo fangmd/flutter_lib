@@ -17,6 +17,7 @@ class RPCHttp {
 
   Socket get sockClient => _sockClient;
 
+  /// 请求结果回调
   Map<int, Function(Map<String, dynamic>)> _callback = HashMap();
 
   /// 公钥加载到内存
@@ -37,6 +38,7 @@ class RPCHttp {
     });
   }
 
+  /// 处理 tcp 返回的参数
   _onEvent(Uint8List event) {
     final u = Unpacker(event);
     final map = u.unpackMap();
@@ -45,8 +47,10 @@ class RPCHttp {
     map['data'] = unpack(Uint8List.fromList(data));
     print(map);
     _callback[map['id']].call(Map<String, dynamic>.from(map));
+    _callback.remove(map['id']);
   }
 
+  /// msgpack 反序列化
   Map<String, dynamic> unpack(Uint8List list) {
     final u = Unpacker(list);
     return Map<String, dynamic>.from(u.unpackMap());

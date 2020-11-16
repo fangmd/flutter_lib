@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart';
 
+/// 对称加密
 class AESUtils {
   AESUtils._();
   static final instance = AESUtils._();

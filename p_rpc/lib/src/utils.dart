@@ -9,8 +9,8 @@ int generageId() {
   return DateTime.now().microsecondsSinceEpoch;
 }
 
-/// 加密数据 rsa
-/// [RSAPublicKey publicKey]
+/// 非对称加密 加密数据 rsa
+/// [pKey]
 Future<String> encryptRSA(String pKey, Uint8List data) async {
   final parser = RSAKeyParser();
   final publicKey = parser.parse(pKey) as RSAPublicKey;
@@ -21,8 +21,8 @@ Future<String> encryptRSA(String pKey, Uint8List data) async {
   return encrypted.base64;
 }
 
-/// 加密数据 rsa
-/// [RSAPublicKey publicKey]
+/// 非对称加密 加密数据 rsa
+/// [pKey]
 Future<String> encryptRSAStr(String pKey, String data) async {
   final parser = RSAKeyParser();
   final publicKey = parser.parse(pKey) as RSAPublicKey;
