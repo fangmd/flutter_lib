@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -7,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:messagepack/messagepack.dart';
 
 import 'aes.dart';
+import 'callback_manager.dart';
 import 'utils.dart';
 
 /// TCP + MsgPack
@@ -18,8 +18,8 @@ class RPCHttp {
 
   Socket get sockClient => _sockClient;
 
-  /// 请求结果回调
-  Map<int, Function(Map<String, dynamic>)> _callback = HashMap();
+  /// 回调管理
+  CallbackManager callbackManager = CallbackManager();
 
   /// 公钥加载到内存
   String publicKey;
@@ -52,8 +52,7 @@ class RPCHttp {
     // json data
     map['data'] = json.decode(utf8.decode(Uint8List.fromList(data)));
     print(map);
-    _callback[map['id']].call(Map<String, dynamic>.from(map));
-    _callback.remove(map['id']);
+    callbackManager.useCallback(map['id'], Map<String, dynamic>.from(map));
   }
 
   /// msgpack 反序列化
@@ -117,6 +116,6 @@ class RPCHttp {
 
     Uint8List bytes = body.takeBytes(); // Uint8List
     _sockClient.add(bytes);
-    _callback[id] = onData;
+    callbackManager.addCallback(id, onData);
   }
 }
