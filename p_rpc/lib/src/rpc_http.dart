@@ -8,6 +8,7 @@ import 'package:p_utils/p_utils.dart';
 
 import 'aes.dart';
 import 'callback_manager.dart';
+import 'config.dart';
 import 'utils.dart';
 
 /// TCP + MsgPack
@@ -28,8 +29,16 @@ class RPCHttp {
   // token
   String token = 'init';
 
+  /// RPCConfig
+  RPCConfig config;
+
   /// 初始化函数
   Future<void> init(String ip, int port, String publicPath) async {
+    if (ip == null || port == null || publicPath == null) {
+      return;
+    }
+    config = RPCConfig(ip, port, publicPath);
+
     publicKey = await rootBundle.loadString(publicPath);
 
     _sockClient = await Socket.connect(ip, port);
@@ -39,6 +48,9 @@ class RPCHttp {
       _onEvent(event);
     }, onDone: () {
       Logger.d(msg: 'socket done');
+      Future.delayed(Duration(seconds: 1), () {
+        init(config?.ip, config?.port, config?.publicPath);
+      });
     });
   }
 
