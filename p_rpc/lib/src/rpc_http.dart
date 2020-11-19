@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:messagepack/messagepack.dart';
+import 'package:p_utils/p_utils.dart';
 
 import 'aes.dart';
 import 'callback_manager.dart';
@@ -41,18 +42,22 @@ class RPCHttp {
 
   /// 处理 tcp 返回的参数
   _onEvent(Uint8List event) {
-    final u = Unpacker(event);
-    final map = u.unpackMap();
-    // print(map);
-    final data = AESUtils.instance.decryptBytes(map['data']);
+    try {
+      final u = Unpacker(event);
+      final map = u.unpackMap();
+      // print(map);
+      final data = AESUtils.instance.decryptBytes(map['data']);
 
-    // msgpack
-    // map['data'] = unpackMap(Uint8List.fromList(data));
+      // msgpack
+      // map['data'] = unpackMap(Uint8List.fromList(data));
 
-    // json data
-    map['data'] = json.decode(utf8.decode(Uint8List.fromList(data)));
-    print(map);
-    callbackManager.useCallback(map['id'], Map<String, dynamic>.from(map));
+      // json data
+      map['data'] = json.decode(utf8.decode(Uint8List.fromList(data)));
+      Logger.d(msg: map);
+      callbackManager.useCallback(map['id'], Map<String, dynamic>.from(map));
+    } catch (e) {
+      Logger.d(msg: e);
+    }
   }
 
   /// msgpack 反序列化
