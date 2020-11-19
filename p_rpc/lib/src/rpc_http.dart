@@ -105,6 +105,7 @@ class RPCHttp {
   /// [onData] 请求结果回调
   void send(String api, Map<String, dynamic> params,
       Function(Map<String, dynamic>) onData) async {
+    Logger.d(msg: 'Send: $api, $params');
     int id = generageId();
     final body = Packer();
     body.packMapLength(5);
