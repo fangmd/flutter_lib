@@ -33,10 +33,12 @@ class RPCHttp {
     publicKey = await rootBundle.loadString(publicPath);
 
     _sockClient = await Socket.connect(ip, port);
-    print('socket client init success');
+    Logger.d(msg: 'socket client init success');
 
     _sockClient.listen((event) {
       _onEvent(event);
+    }, onDone: () {
+      Logger.d(msg: 'socket done');
     });
   }
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:p_utils/p_utils.dart';
 
 /// 回调管理
 /// 1. 添加回调，使用回调
@@ -17,6 +18,9 @@ class CallbackManager {
 
   /// 添加回调
   addCallback(int id, Function(Map<String, dynamic>) callback) {
+    if (callback == null) {
+      return;
+    }
     _callback[id] = callback;
     _callbackTime[id] = DateTime.now().millisecondsSinceEpoch;
     _detectOutTime();
@@ -24,7 +28,11 @@ class CallbackManager {
 
   /// 使用回调并删除
   useCallback(int id, Map<String, dynamic> params) {
-    _callback[id]?.call(params);
+    try {
+      _callback[id]?.call(params);
+    } catch (e) {
+      Logger.d(msg: e);
+    }
     _removeCallback(id: id);
   }
 
@@ -49,8 +57,8 @@ class CallbackManager {
       List<int> _tmpRemoves = [];
       final nowMill = DateTime.now().millisecondsSinceEpoch;
       _callbackTime.forEach((key, value) {
-        if (nowMill - nowMill >= 5 * 60 * 1000) {
-          _tmpRemoves.add(value);
+        if (nowMill - value >= 5 * 1000) {
+          _tmpRemoves.add(key);
         }
       });
 
