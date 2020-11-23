@@ -128,9 +128,17 @@ class RPCHttp {
     body.packString('auth');
     body.packString(await encryptRSAStr(publicKey, AESUtils.instance.pk));
     body.packString('api');
-    body.packString(AESUtils.instance.encryptStr(api ?? '--'));
+    if (api.isNullOrEmpty()) {
+      body.packString(AESUtils.instance.encryptStr(''));
+    } else {
+      body.packString(AESUtils.instance.encryptStr(api));
+    }
     body.packString('token');
-    body.packString(AESUtils.instance.encryptStr(token ?? '--'));
+    if (token.isNullOrEmpty()) {
+      body.packString('');
+    } else {
+      body.packString(AESUtils.instance.encryptStr(token));
+    }
     body.packString('data');
     body.packString(packData(params));
 
