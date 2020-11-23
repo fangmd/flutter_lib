@@ -128,9 +128,9 @@ class RPCHttp {
     body.packString('auth');
     body.packString(await encryptRSAStr(publicKey, AESUtils.instance.pk));
     body.packString('api');
-    body.packString(AESUtils.instance.encryptStr(api ?? ''));
+    body.packString(AESUtils.instance.encryptStr(api ?? '--'));
     body.packString('token');
-    body.packString(AESUtils.instance.encryptStr(token ?? ''));
+    body.packString(AESUtils.instance.encryptStr(token ?? '--'));
     body.packString('data');
     body.packString(packData(params));
 
