@@ -119,7 +119,6 @@ class RPCHttp {
   /// [onData] 请求结果回调
   void send(String api, Map<String, dynamic> params,
       Function(Map<String, dynamic>) onData) async {
-    Logger.d(msg: 'Send: $api, $params');
     int id = generageId();
     final body = Packer();
     body.packMapLength(5);
@@ -141,6 +140,8 @@ class RPCHttp {
     }
     body.packString('data');
     body.packString(packData(params));
+
+    Logger.d(msg: 'Send: token:$token, api:$api, params:$params');
 
     Uint8List bytes = body.takeBytes(); // Uint8List
     _sockClient.add(bytes);
