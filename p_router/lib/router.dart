@@ -1,4 +1,4 @@
-library router;
+library p_router;
 
 import 'package:flutter/material.dart';
 

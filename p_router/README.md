@@ -4,7 +4,7 @@ router utils
 
 ## Setup
 
-定义路由 Map: `router/router_config.dart`
+定义路由 Map: `p_router/router_config.dart`
 
 ```Dart
 Map<String, WidgetBuilder> route = {
