@@ -65,11 +65,11 @@ class RPCHttp {
         Uint8List concatEvent = _lastEvent + event;
         _dealPackage(concatEvent);
         _lastEvent = null;
-        return;
       } catch (e) {
         Logger.d(msg: 'combine event error');
         _lastEvent = null;
       }
+      return;
     }
 
     try {
