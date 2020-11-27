@@ -59,17 +59,17 @@ class RPCHttp {
 
   /// 处理 tcp 返回的参数
   _onEvent(Uint8List event) {
-    try {
-      if (_lastEvent != null) {
+    if (_lastEvent != null) {
+      try {
         // 合包
         Uint8List concatEvent = _lastEvent + event;
         _dealPackage(concatEvent);
+        _lastEvent = null;
+        return;
+      } catch (e) {
+        Logger.d(msg: 'combine event error');
+        _lastEvent = null;
       }
-      _lastEvent = null;
-      return;
-    } catch (e) {
-      Logger.d(msg: 'combine event error');
-      _lastEvent = null;
     }
 
     try {
@@ -91,7 +91,7 @@ class RPCHttp {
     Logger.d(msg: map);
     callbackManager.useCallback(map['id'], Map<String, dynamic>.from(map));
   }
-  
+
   /// msgpack 反序列化
   Map<String, dynamic> unpackMap(Uint8List list) {
     final u = Unpacker(list);
