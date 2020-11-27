@@ -32,6 +32,9 @@ class RPCHttp {
   /// RPCConfig
   RPCConfig config;
 
+  /// 处理拆包
+  Uint8List _lastEvent;
+
   /// 初始化函数
   Future<void> init(String ip, int port, String publicPath) async {
     if (ip == null || port == null || publicPath == null) {
@@ -57,23 +60,38 @@ class RPCHttp {
   /// 处理 tcp 返回的参数
   _onEvent(Uint8List event) {
     try {
-      final u = Unpacker(event);
-      final map = u.unpackMap();
-      // print(map);
-      final data = AESUtils.instance.decryptBytes(map['data']);
+      if (_lastEvent != null) {
+        // 合包
+        Uint8List concatEvent = _lastEvent + event;
+        _dealPackage(concatEvent);
+      }
+      _lastEvent = null;
+      return;
+    } catch (e) {
+      Logger.d(msg: 'combine event error');
+      _lastEvent = null;
+    }
 
-      // msgpack
-      // map['data'] = unpackMap(Uint8List.fromList(data));
-
-      // json data
-      map['data'] = json.decode(utf8.decode(Uint8List.fromList(data)));
-      Logger.d(msg: map);
-      callbackManager.useCallback(map['id'], Map<String, dynamic>.from(map));
+    try {
+      _dealPackage(event);
     } catch (e) {
       Logger.d(msg: e);
+      _lastEvent = event;
     }
   }
 
+  /// 处理包
+  void _dealPackage(Uint8List event) {
+    final u = Unpacker(event);
+    final map = u.unpackMap();
+    // print(map);
+    final data = AESUtils.instance.decryptBytes(map['data']);
+    // json data
+    map['data'] = json.decode(utf8.decode(Uint8List.fromList(data)));
+    Logger.d(msg: map);
+    callbackManager.useCallback(map['id'], Map<String, dynamic>.from(map));
+  }
+  
   /// msgpack 反序列化
   Map<String, dynamic> unpackMap(Uint8List list) {
     final u = Unpacker(list);
