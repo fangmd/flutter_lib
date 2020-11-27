@@ -62,11 +62,12 @@ class RPCHttp {
     if (_lastEvent != null) {
       try {
         // 合包
-        Uint8List concatEvent = _lastEvent + event;
+        Uint8List concatEvent = Uint8List.fromList(_lastEvent + event);
         _dealPackage(concatEvent);
         _lastEvent = null;
+        Logger.d(msg: 'combine event success');
       } catch (e) {
-        Logger.d(msg: 'combine event error');
+        Logger.d(msg: 'combine event error $e');
         _lastEvent = null;
       }
       return;
