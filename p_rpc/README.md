@@ -17,3 +17,7 @@ RPCHttp.instance.send('qrcode_proxy_add_qrcode', data, (ret) {
     print(ret);
 });
 ```
+
+# Feature
+
+- [x] 请求超时处理

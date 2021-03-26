@@ -1,12 +1,14 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:messagepack/messagepack.dart';
+import 'package:p_utils/p_utils.dart';
 
 import 'aes.dart';
+import 'callback_manager.dart';
+import 'config.dart';
 import 'utils.dart';
 
 /// TCP + MsgPack
@@ -18,8 +20,8 @@ class RPCHttp {
 
   Socket get sockClient => _sockClient;
 
-  /// 请求结果回调
-  Map<int, Function(Map<String, dynamic>)> _callback = HashMap();
+  /// 回调管理
+  CallbackManager callbackManager = CallbackManager();
 
   /// 公钥加载到内存
   String publicKey;
@@ -27,33 +29,68 @@ class RPCHttp {
   // token
   String token = 'init';
 
+  /// RPCConfig
+  RPCConfig config;
+
+  /// 处理拆包
+  Uint8List _lastEvent;
+
   /// 初始化函数
   Future<void> init(String ip, int port, String publicPath) async {
+    if (ip == null || port == null || publicPath == null) {
+      return;
+    }
+    config = RPCConfig(ip, port, publicPath);
+
     publicKey = await rootBundle.loadString(publicPath);
 
     _sockClient = await Socket.connect(ip, port);
-    print('socket client init success');
+    Logger.d(msg: 'socket client init success');
 
     _sockClient.listen((event) {
       _onEvent(event);
+    }, onDone: () {
+      Logger.d(msg: 'socket done');
+      Future.delayed(Duration(seconds: 1), () {
+        init(config?.ip, config?.port, config?.publicPath);
+      });
     });
   }
 
   /// 处理 tcp 返回的参数
   _onEvent(Uint8List event) {
+    if (_lastEvent != null) {
+      try {
+        // 合包
+        Uint8List concatEvent = Uint8List.fromList(_lastEvent + event);
+        _dealPackage(concatEvent);
+        _lastEvent = null;
+        Logger.d(msg: 'combine event success');
+      } catch (e) {
+        Logger.d(msg: 'combine event error $e');
+        _lastEvent = null;
+      }
+      return;
+    }
+
+    try {
+      _dealPackage(event);
+    } catch (e) {
+      Logger.d(msg: e);
+      _lastEvent = event;
+    }
+  }
+
+  /// 处理包
+  void _dealPackage(Uint8List event) {
     final u = Unpacker(event);
     final map = u.unpackMap();
     // print(map);
     final data = AESUtils.instance.decryptBytes(map['data']);
-
-    // msgpack
-    // map['data'] = unpackMap(Uint8List.fromList(data));
-
     // json data
     map['data'] = json.decode(utf8.decode(Uint8List.fromList(data)));
-    print(map);
-    _callback[map['id']].call(Map<String, dynamic>.from(map));
-    _callback.remove(map['id']);
+    Logger.d(msg: map);
+    callbackManager.useCallback(map['id'], Map<String, dynamic>.from(map));
   }
 
   /// msgpack 反序列化
@@ -109,14 +146,24 @@ class RPCHttp {
     body.packString('auth');
     body.packString(await encryptRSAStr(publicKey, AESUtils.instance.pk));
     body.packString('api');
-    body.packString(AESUtils.instance.encryptStr(api));
+    if (api.isNullOrEmpty()) {
+      body.packString(AESUtils.instance.encryptStr(''));
+    } else {
+      body.packString(AESUtils.instance.encryptStr(api));
+    }
     body.packString('token');
-    body.packString(AESUtils.instance.encryptStr(token));
+    if (token.isNullOrEmpty()) {
+      body.packString('');
+    } else {
+      body.packString(AESUtils.instance.encryptStr(token));
+    }
     body.packString('data');
     body.packString(packData(params));
 
+    Logger.d(msg: 'Send: token:$token, api:$api, params:$params');
+
     Uint8List bytes = body.takeBytes(); // Uint8List
     _sockClient.add(bytes);
-    _callback[id] = onData;
+    callbackManager.addCallback(id, onData);
   }
 }

@@ -5,6 +5,7 @@ class WebViewUtils {
 
   /// 是否是官方的 WebUrl
   static bool isOfficialUrl(String url) {
+    if (url.isEmpty || url == null) return false;
     for (final i in officialWebUrl) {
       if (url.indexOf(i) != -1) {
         return true;
@@ -15,11 +16,13 @@ class WebViewUtils {
 
   /// 处理 URL
   static String dealUrl(String url) {
+    if (url.isEmpty || url == null) return url;
     return addUserAuth(url);
   }
 
   /// Url 添加用户认证信息
   static String addUserAuth(String url) {
+    if (url.isEmpty || url == null) return url;
     if (isOfficialUrl(url)) {
       final uri = Uri.parse(url);
       Map<String, dynamic> q = {};
