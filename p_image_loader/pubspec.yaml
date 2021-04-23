@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg:
-  cached_network_image: ^2.5.1
+  cached_network_image: ^3.0.0
 
 dev_dependencies:
   flutter_test:

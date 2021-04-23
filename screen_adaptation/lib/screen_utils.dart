@@ -1,6 +1,4 @@
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const bool sUseScreenAdoption = true;
 
@@ -15,9 +13,9 @@ double px2dp(double value) {
 }
 
 /// 字体适配
-double px2sp(double value, {allowFontScaling = false}) {
+double px2sp(double value) {
   if (sUseScreenAdoption) {
-    value = ScreenUtil().setSp(value, allowFontScalingSelf: allowFontScaling);
+    value = ScreenUtil().setSp(value);
   } else {
     value = value / 2;
   }
@@ -27,14 +25,14 @@ double px2sp(double value, {allowFontScaling = false}) {
 /// 屏幕适配
 /// 目前设计稿：iphone6 1334/750 16/9
 class MScreenUtils {
-  static init(BuildContext context,
-      {double width = 750.0, double height = 1334.0}) {
-    ScreenUtil.init(context, width: width, height: height);
-  }
+  // static init(BuildContext context,
+  //     {double width = 750.0, double height = 1334.0}) {
+  //   ScreenUtilInit(context, width: width, height: height);
+  // }
 
   /// 一个物理像素
   static double onePx() {
-    return 1 / ScreenUtil.pixelRatio;
+    return 1 / ScreenUtil().pixelRatio;
   }
 
   static double getWidth(double width) {
@@ -56,22 +54,14 @@ class MScreenUtils {
   }
 
   static double getWindowHeight() {
-    return ScreenUtil.screenHeight;
+    return ScreenUtil().screenHeight;
   }
 
   static double getScreenWidth() {
-    return ScreenUtil.screenWidth;
+    return ScreenUtil().screenWidth;
   }
 
   static double getScreenHeight() {
-    return ScreenUtil.screenHeight;
-  }
-
-  static double getScreenWidthDp() {
-    return ScreenUtil.screenWidthDp;
-  }
-
-  static double getScreenHeightDp() {
-    return ScreenUtil.screenHeightDp;
+    return ScreenUtil().screenHeight;
   }
 }
