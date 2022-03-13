@@ -3,40 +3,40 @@ import 'package:flutter/material.dart';
 /// 按钮
 class MFlatButton extends StatelessWidget {
   /// 点击事件
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   /// 设置按钮是否可用
   final bool enable;
 
   /// 文本
   final String content;
-  final Color bgColor;
+  final Color? bgColor;
 
   /// 不可用 背景色
-  final Color disableBgColor;
+  final Color? disableBgColor;
 
   /// 长按按钮颜色
-  final Color highlightColor;
+  final Color? highlightColor;
 
   /// 不可用 文字颜色
-  final Color disabledTextColor;
+  final Color? disabledTextColor;
 
   /// 文本样式
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// 按钮宽度
-  final double width;
+  final double? width;
 
   /// 按钮高度
-  final double height;
+  final double? height;
 
   /// 圆角
-  final double radius;
+  final double? radius;
 
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? margin;
 
   const MFlatButton({
-    Key key,
+    Key? key,
     this.onPressed,
     this.enable = true,
     this.content = '',
@@ -63,7 +63,7 @@ class MFlatButton extends StatelessWidget {
       onPressed: enable ? onPressed : null,
       child: Text(content, style: textStyle),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(radius),
+        borderRadius: BorderRadius.circular(radius ?? 0),
       ),
     );
     if (width == null && height == null) {

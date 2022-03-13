@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 /// 圆形 色块
 class CircleWidget extends StatelessWidget {
-  final double height;
-  final double width;
-  final Color color;
+  final double? height;
+  final double? width;
+  final Color? color;
 
   const CircleWidget({
-    Key key,
+    Key? key,
     this.height,
     this.width,
     this.color,
@@ -28,12 +28,12 @@ class CircleWidget extends StatelessWidget {
 
 /// 矩形 色块
 class RectangleWidget extends StatelessWidget {
-  final double height;
-  final double width;
-  final Color color;
+  final double? height;
+  final double? width;
+  final Color? color;
 
   const RectangleWidget({
-    Key key,
+    Key? key,
     this.height,
     this.width,
     this.color,
@@ -52,6 +52,8 @@ class RectangleWidget extends StatelessWidget {
 /// 空白填充组件
 /// 在 Row&Column 中使用
 class EmptyExpanded extends StatelessWidget {
+  const EmptyExpanded({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Expanded(child: SizedBox());

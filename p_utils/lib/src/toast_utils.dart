@@ -5,7 +5,6 @@ class ToastUtils {
   static bool isShowing = false;
 
   static void show(String msg) async {
-    if (msg == null) return;
     if (msg == '') return;
     if (!isShowing) {
       isShowing = true;
@@ -14,12 +13,12 @@ class ToastUtils {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.black,
         textColor: Colors.white,
         fontSize: 16.0,
       );
 
-      Future.delayed(Duration(milliseconds: 1000), () {
+      Future.delayed(const Duration(milliseconds: 1000), () {
         isShowing = false;
       });
     }

@@ -7,55 +7,56 @@ class RouterUtils {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   /// 不需要 context 直接跳转
-  static Future<T> pushNamedWithoutContext<T>(String name, {Object arguments}) {
-    return navigatorKey.currentState.pushNamed<T>(name, arguments: arguments);
+  static Future<T?>? pushNamedWithoutContext<T extends Object?>(String name,
+      {Object? arguments}) {
+    return navigatorKey.currentState?.pushNamed<T>(name, arguments: arguments);
   }
 
-  static Future<T> pushNamed<T>(
+  static Future<T?> pushNamed<T>(
     BuildContext context,
     String routeName, {
-    Object arguments,
+    Object? arguments,
   }) {
     return Navigator.pushNamed<T>(context, routeName, arguments: arguments);
   }
 
-  static Future<T> push<T>(BuildContext context, Widget page) {
-    return Navigator.push<T>(
+  static Future<T?> push<T>(BuildContext context, Widget page) {
+    return Navigator.push<T?>(
       context,
       MaterialPageRoute(builder: (_) => page),
     );
   }
 
-  static Future<T> push2<T>(Widget page) {
+  static Future<T?>? push2<T>(Widget page) {
     return navigatorKey.currentState
-        .push<T>(MaterialPageRoute(builder: (_) => page));
+        ?.push<T>(MaterialPageRoute(builder: (_) => page));
   }
 
   /// 自定义跳转效果
-  static Future<T> pushWithRoute<T>(BuildContext context, Route route) {
+  static Future<T?> pushWithRoute<T>(BuildContext context, Route<T> route) {
     return Navigator.push(context, route);
   }
 
-  static Future<T> pushWithRoute2<T>(Route route) {
-    return navigatorKey.currentState.push<T>(route);
+  static Future<T?>? pushWithRoute2<T extends Object?>(Route<T> route) {
+    return navigatorKey.currentState?.push<T>(route);
   }
 
-  static void pop<T>(BuildContext context, [T arguments]) {
+  static void pop<T>(BuildContext context, [T? arguments]) {
     Navigator.pop<T>(context, arguments);
   }
 
-  static void pop2({BuildContext context}) {
+  static void pop2({BuildContext? context}) {
     if (context == null) {
-      navigatorKey.currentState.pop();
+      navigatorKey.currentState?.pop();
     } else {
       Navigator.pop(context);
     }
   }
 
   /// 回退到某个页面
-  static void popUntil({BuildContext context, String name}) {
+  static void popUntil({BuildContext? context, required String name}) {
     if (context == null) {
-      navigatorKey.currentState.popUntil(ModalRoute.withName(name));
+      navigatorKey.currentState?.popUntil(ModalRoute.withName(name));
     } else {
       Navigator.popUntil(context, ModalRoute.withName(name));
     }
@@ -67,8 +68,8 @@ class RouterUtils {
   }
 
   /// 启动一个新的页面，并清理所有历史栈
-  static void pushNamedAndRemoveAll2<T>(String newRouteName, [T arguments]) {
-    navigatorKey.currentState.pushNamedAndRemoveUntil<T>(
+  static void pushNamedAndRemoveAll2<T>(String newRouteName, [T? arguments]) {
+    navigatorKey.currentState?.pushNamedAndRemoveUntil<T>(
         newRouteName, (_) => false,
         arguments: arguments);
   }

@@ -10,23 +10,23 @@ import '../p_image_loader.dart';
 class CachedNetImg extends StatelessWidget {
   static const Color greyF2 = Color(0xFFF2F2F2);
 
-  final String imgUrl;
-  final double width;
-  final double height;
-  final BoxFit fit;
+  final String? imgUrl;
+  final double? width;
+  final double? height;
+  final BoxFit? fit;
   final Color placeHolderColor;
-  final String placeHolderAssets;
+  final String? placeHolderAssets;
 
   /// 设置点击事件
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   /// 设置圆角
-  final double radius;
-  final File file;
-  final EdgeInsetsGeometry padding;
+  final double? radius;
+  final File? file;
+  final EdgeInsetsGeometry? padding;
 
   const CachedNetImg(
-      {Key key,
+      {Key? key,
       this.imgUrl,
       this.file,
       this.width,
@@ -43,7 +43,7 @@ class CachedNetImg extends StatelessWidget {
   Widget build(BuildContext context) {
     if (file != null) {
       return LocalImg.file(
-        file,
+        file!,
         height: height,
         width: width,
         fit: fit,
@@ -54,7 +54,7 @@ class CachedNetImg extends StatelessWidget {
     }
 
     Widget ret;
-    if (radius != null && radius > 0) {
+    if (radius != null && radius! > 0) {
       ret = _buildRoundCore();
     } else {
       ret = _buildCore();
@@ -71,7 +71,7 @@ class CachedNetImg extends StatelessWidget {
   }
 
   Widget _buildCore() {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: CachedNetworkImage(
@@ -87,7 +87,7 @@ class CachedNetImg extends StatelessWidget {
   }
 
   Widget _buildRoundCore() {
-    return Container(
+    return SizedBox(
       height: height,
       width: width,
       child: CachedNetworkImage(
@@ -97,7 +97,7 @@ class CachedNetImg extends StatelessWidget {
         fadeOutDuration: Duration.zero,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(radius)),
+            borderRadius: BorderRadius.all(Radius.circular(radius!)),
             image: DecorationImage(
               image: imageProvider,
               fit: BoxFit.cover,
@@ -109,9 +109,9 @@ class CachedNetImg extends StatelessWidget {
   }
 
   Widget placeholder(BuildContext context, _) {
-    if (placeHolderAssets != null && placeHolderAssets.isNotEmpty) {
+    if (placeHolderAssets != null && placeHolderAssets!.isNotEmpty) {
       return LocalImg(
-        placeHolderAssets,
+        placeHolderAssets!,
         radius: radius,
         width: width,
         height: height,
@@ -119,10 +119,10 @@ class CachedNetImg extends StatelessWidget {
       );
     }
 
-    if (radius != null && radius > 0) {
+    if (radius != null && radius! > 0) {
       return Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(radius)),
+          borderRadius: BorderRadius.all(Radius.circular(radius!)),
           color: placeHolderColor,
         ),
       );

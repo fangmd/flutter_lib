@@ -45,13 +45,13 @@ class WheelWidget extends StatefulWidget {
   final List<String> data;
 
   /// 数据源2 不一定有
-  final List<String> secData;
+  final List<String>? secData;
 
   /// 数据源1 回调
-  final ValueChanged<int> onSelected;
+  final ValueChanged<int>? onSelected;
 
   /// 数据源2 回调
-  final ValueChanged<int> onSecSelected;
+  final ValueChanged<int>? onSecSelected;
 
   /// 数据源1 初始选择项
   final int initIndex;
@@ -61,11 +61,11 @@ class WheelWidget extends StatefulWidget {
 
   WheelWidget({
     this.viewCnt = 5,
-    this.selectedTextStyle = const TextStyle(fontSize: 20, color: Color(0xFF774EFF)),
+    this.selectedTextStyle =
+        const TextStyle(fontSize: 20, color: Color(0xFF774EFF)),
     this.unSelectedTextStyle =
         const TextStyle(fontSize: 20, color: Color(0xFF999999)),
-
-    @required this.data,
+    required this.data,
     this.secData,
     this.divideColor = const Color(0xFFF3F3F3),
     this.showDivide = false,
@@ -96,10 +96,10 @@ class _WheelWidgetState extends State<WheelWidget> {
   double itemHeight = 0;
 
   /// 数据源1 pageController
-  PageController pageController;
+  late PageController pageController;
 
   /// 数据源2 pageController
-  PageController secPageController;
+  late PageController secPageController;
 
   /// 参数: 用于控制 PageView 一次显示多少个 Item
   /// 0.2: 表示显示 5 个， 1/0.2=5
@@ -115,7 +115,7 @@ class _WheelWidgetState extends State<WheelWidget> {
         viewportFraction: viewportFraction, initialPage: widget.initIndex);
     _selectedIndex = widget.initIndex;
     if (widget.onSelected != null) {
-      widget.onSelected(_selectedIndex);
+      widget.onSelected?.call(_selectedIndex);
     }
 
     if (widget.secData != null) {
@@ -123,12 +123,12 @@ class _WheelWidgetState extends State<WheelWidget> {
           viewportFraction: viewportFraction, initialPage: widget.initSecIndex);
       _secSelectedIndex = widget.initSecIndex;
       if (widget.onSecSelected != null) {
-        widget.onSecSelected(_secSelectedIndex);
+        widget.onSecSelected?.call(_secSelectedIndex);
       }
     }
 
     Future.delayed(Duration.zero, () {
-      RenderBox rb = _keyStack.currentContext.findRenderObject();
+      RenderBox rb = _keyStack.currentContext?.findRenderObject() as RenderBox;
       _widgetHeight = rb.size.height;
       setState(() {});
     });
@@ -202,13 +202,13 @@ class _WheelWidgetState extends State<WheelWidget> {
           _selectedIndex = index;
         });
         if (widget.onSelected != null) {
-          widget.onSelected(_selectedIndex);
+          widget.onSelected?.call(_selectedIndex);
         }
       },
       controller: pageController,
       itemBuilder: (context, index) => _buildItem(context, index),
       scrollDirection: Axis.vertical,
-      itemCount: widget.data?.length ?? 0,
+      itemCount: widget.data.length,
     );
   }
 
@@ -219,13 +219,13 @@ class _WheelWidgetState extends State<WheelWidget> {
           _secSelectedIndex = index;
         });
         if (widget.onSecSelected != null) {
-          widget.onSecSelected(_secSelectedIndex);
+          widget.onSecSelected?.call(_secSelectedIndex);
         }
       },
       controller: secPageController,
       itemBuilder: (context, index) => _buildSecItem(context, index),
       scrollDirection: Axis.vertical,
-      itemCount: widget.data?.length ?? 0,
+      itemCount: widget.data.length,
     );
   }
 
@@ -234,7 +234,7 @@ class _WheelWidgetState extends State<WheelWidget> {
       height: itemHeight,
       alignment: Alignment.center,
       child: Text(
-        widget.data?.elementAt(index) ?? '',
+        widget.data.elementAt(index),
         style: _selectedIndex == index
             ? widget.selectedTextStyle
             : widget.unSelectedTextStyle,
@@ -244,14 +244,14 @@ class _WheelWidgetState extends State<WheelWidget> {
 
   Widget _buildSecItem(BuildContext context, int index) {
     String name = '';
-    if (widget.secData.length > index) {
+    if (widget.secData != null && widget.secData!.length > index) {
       name = widget.secData?.elementAt(index) ?? '';
     }
     return Container(
       height: itemHeight,
       alignment: Alignment.center,
       child: Text(
-        name ?? '',
+        name,
         style: _secSelectedIndex == index
             ? widget.selectedTextStyle
             : widget.unSelectedTextStyle,

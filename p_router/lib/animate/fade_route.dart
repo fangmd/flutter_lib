@@ -4,9 +4,9 @@ class FadeRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
 
   FadeRoute({
-    @required this.child,
-    RoutePageBuilder builder,
-    RouteSettings settings,
+    required this.child,
+    RoutePageBuilder? builder,
+    RouteSettings? settings,
   }) : super(
           pageBuilder: (BuildContext context, Animation<double> animation,
               Animation<double> secondaryAnimation) {

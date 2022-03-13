@@ -11,11 +11,11 @@ class MDivide extends StatelessWidget {
 
   /// 方向
   final Axis direction;
-  final double weight;
+  final double? weight;
 
   const MDivide({
-    Key key,
-    this.pad,
+    Key? key,
+    this.pad = 0,
     this.color = DefaultColor,
     this.direction = Axis.horizontal,
     this.weight,
@@ -23,14 +23,14 @@ class MDivide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double wei = weight;
+    double? wei = weight;
     MediaQueryData mediaQuery = MediaQuery.of(context);
     if (wei == null) {
       wei = 1 / mediaQuery.devicePixelRatio;
     }
-    if (this.direction == Axis.vertical) {
+    if (direction == Axis.vertical) {
       return Container(
-        margin: EdgeInsets.symmetric(vertical: pad ?? 0),
+        margin: EdgeInsets.symmetric(vertical: pad),
         height: double.infinity,
         decoration: BoxDecoration(
           color: color,
@@ -46,7 +46,7 @@ class MDivide extends StatelessWidget {
       );
     }
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: pad ?? 0),
+      margin: EdgeInsets.symmetric(horizontal: pad),
       width: double.infinity,
       height: wei,
       color: color,

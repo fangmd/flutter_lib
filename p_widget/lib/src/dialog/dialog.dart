@@ -14,14 +14,12 @@ Widget customDialogPure({child: Widget}) {
 }
 
 //// 全屏幕 弹框
-Future<T> showFullScreenDialog<T>(BuildContext context, Widget child,
+Future<T?> showFullScreenDialog<T>(BuildContext context, Widget child,
     {bool barrierDismissible = true}) {
   return showGeneralDialog(
     context: context,
     barrierDismissible: barrierDismissible,
-    barrierLabel: MaterialLocalizations
-        .of(context)
-        .modalBarrierDismissLabel,
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     transitionDuration: const Duration(milliseconds: 150),
     transitionBuilder: _buildMaterialDialogTransitions,
     pageBuilder: (BuildContext buildContext, Animation<double> animation,
@@ -31,7 +29,8 @@ Future<T> showFullScreenDialog<T>(BuildContext context, Widget child,
   );
 }
 
-Widget _buildMaterialDialogTransitions(BuildContext context,
+Widget _buildMaterialDialogTransitions(
+    BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child) {
@@ -45,12 +44,12 @@ Widget _buildMaterialDialogTransitions(BuildContext context,
 }
 
 class FullDialogBg extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final bool barrierDismissible;
   final Color color;
 
   const FullDialogBg({
-    Key key,
+    Key? key,
     this.child,
     this.barrierDismissible = true,
     this.color = const Color(0x4D000000),

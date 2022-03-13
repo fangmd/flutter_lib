@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PopupWindow extends StatefulWidget {
   static void showPopWindow(context, String msg, GlobalKey popKey,
       [PopDirection popDirection = PopDirection.bottom,
-      Widget popWidget,
+      Widget? popWidget,
       double offset = 0]) {
     Navigator.push(
       context,
@@ -20,10 +20,10 @@ class PopupWindow extends StatefulWidget {
     );
   }
 
-  final String msg;
-  final GlobalKey popKey;
+  final String? msg;
+  final GlobalKey? popKey;
   final PopDirection popDirection;
-  final Widget popWidget; //自定义widget
+  final Widget? popWidget; //自定义widget
   final double offset; //popupWindow偏移量
 
   PopupWindow(
@@ -31,7 +31,7 @@ class PopupWindow extends StatefulWidget {
       this.msg,
       this.popKey,
       this.popDirection = PopDirection.bottom,
-      this.offset});
+      this.offset = 0});
 
   @override
   State<StatefulWidget> createState() {
@@ -40,7 +40,7 @@ class PopupWindow extends StatefulWidget {
 }
 
 class _PopupWindowState extends State<PopupWindow> {
-  GlobalKey buttonKey;
+  GlobalKey? buttonKey;
   double left = -100;
   double top = -100;
 
@@ -48,13 +48,15 @@ class _PopupWindowState extends State<PopupWindow> {
   void initState() {
     super.initState();
     buttonKey = GlobalKey();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      RenderBox renderBox = widget.popKey.currentContext.findRenderObject();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      RenderBox renderBox =
+          widget.popKey?.currentContext?.findRenderObject() as RenderBox;
       Offset localToGlobal =
           renderBox.localToGlobal(Offset.zero); //targetWidget的坐标位置
       Size size = renderBox.size; //targetWidget的size
 
-      RenderBox buttonBox = buttonKey.currentContext.findRenderObject();
+      RenderBox buttonBox =
+          buttonKey?.currentContext?.findRenderObject() as RenderBox;
       var buttonSize = buttonBox.size; //button的size
       switch (widget.popDirection) {
         case PopDirection.left:
@@ -104,7 +106,7 @@ class _PopupWindowState extends State<PopupWindow> {
             Positioned(
               child: GestureDetector(
                 child: widget.popWidget == null
-                    ? _buildWidget(widget.msg)
+                    ? _buildWidget(widget.msg ?? '')
                     : _buildCustomWidget(widget.popWidget),
               ),
               left: left,
@@ -128,7 +130,7 @@ class _PopupWindowState extends State<PopupWindow> {
         child: Text(text),
       );
 
-  Widget _buildCustomWidget(Widget child) => Container(
+  Widget _buildCustomWidget(Widget? child) => Container(
         key: buttonKey,
         child: child,
       );
@@ -136,23 +138,23 @@ class _PopupWindowState extends State<PopupWindow> {
 
 class PopRoute extends PopupRoute {
   final Duration _duration = Duration(milliseconds: 200);
-  Widget child;
+  Widget? child;
 
   PopRoute({@required this.child});
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   @override
   bool get barrierDismissible => true;
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    return child;
+    return child!;
   }
 
   @override

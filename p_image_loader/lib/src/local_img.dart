@@ -9,37 +9,37 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// 附带添加点击事件功能
 class LocalImg extends StatelessWidget {
   /// 图片路径
-  final String name;
-  final File file;
-  final Uint8List thumbBytes;
+  final String? name;
+  final File? file;
+  final Uint8List? thumbBytes;
 
   /// 图片宽度
-  final double width;
+  final double? width;
 
   /// 图片高度
-  final double height;
+  final double? height;
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
-  final BoxFit fit;
+  final BoxFit? fit;
 
   /// 控件实际宽高 = height/width + padding
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
-  final double radius;
+  final double? radius;
 
-  final double containerWidth;
-  final double containerHeight;
-  final BoxDecoration decoration;
-  final AlignmentGeometry alignment;
+  final double? containerWidth;
+  final double? containerHeight;
+  final BoxDecoration? decoration;
+  final AlignmentGeometry? alignment;
 
   const LocalImg(
     this.name, {
-    Key key,
+    Key? key,
     this.thumbBytes,
     this.file,
-    this.width,
-    this.height,
+    required this.width,
+    required this.height,
     this.padding,
     this.onTap,
     this.fit = BoxFit.contain,
@@ -106,9 +106,9 @@ class LocalImg extends StatelessWidget {
       );
     }
 
-    if (this.radius != null && this.radius > 0) {
+    if (this.radius != null && this.radius! > 0) {
       ret = ClipRRect(
-        borderRadius: BorderRadius.circular(this.radius),
+        borderRadius: BorderRadius.circular(this.radius!),
         child: ret,
       );
     }
@@ -116,22 +116,22 @@ class LocalImg extends StatelessWidget {
   }
 
   Widget _getImg() {
-    Widget img;
+    Widget? img = null;
     if (name != null) {
-      if (name.endsWith('svg')) {
-        img = SvgPicture.asset(name,
+      if (name!.endsWith('svg')) {
+        img = SvgPicture.asset(name!,
             width: width, height: height, fit: fit ?? BoxFit.contain);
       } else {
-        img = Image.asset(name, width: width, height: height, fit: fit);
+        img = Image.asset(name!, width: width, height: height, fit: fit);
       }
     }
     if (file != null) {
-      img = Image.file(file, width: width, height: height, fit: fit);
+      img = Image.file(file!, width: width, height: height, fit: fit);
     }
 
     if (thumbBytes != null) {
-      img = Image.memory(thumbBytes, width: width, height: height, fit: fit);
+      img = Image.memory(thumbBytes!, width: width, height: height, fit: fit);
     }
-    return img;
+    return img!;
   }
 }

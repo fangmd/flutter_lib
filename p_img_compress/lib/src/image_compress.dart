@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 class ImageCompress {
   ///TODO：opt, 小图片不压缩
-  static Future<File> compressImg(File img,
+  static Future<File?> compressImg(File img,
       {loading = true, noGreyBg = false}) async {
     if (loading) {
       if (noGreyBg) {

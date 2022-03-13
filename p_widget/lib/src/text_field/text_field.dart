@@ -11,28 +11,30 @@ import 'package:flutter/services.dart';
 /// [contentPadding]: 内容 padding
 /// [limitLength]: 限制文本输入长度
 class MTextField extends StatefulWidget {
-  final TextEditingController controller;
-  final String hint;
+  final TextEditingController? controller;
+  final String? hint;
   final Color bgColor;
-  final TextStyle textStyle;
-  final TextStyle hintStyle;
+  final TextStyle? textStyle;
+  final TextStyle? hintStyle;
   final Color cursorColor;
-  final TextInputType keyboardType;
-  final EdgeInsetsGeometry contentPadding;
-  final int limitLength;
+  final TextInputType? keyboardType;
+  final EdgeInsetsGeometry? contentPadding;
+  final int? limitLength;
   final int maxLines;
   final int minLines;
-  final ValueChanged<String> onSubmitted;
-  final Function(String) onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final Function(String)? onChanged;
   final bool autofocus;
-  final List<TextInputFormatter> inputFormatters;
+  final List<TextInputFormatter>? inputFormatters;
   final TextAlign textAlign;
   final bool isObscureText;
   final bool enable;
   final bool enableInteractiveSelection;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
 
   MTextField({
-    Key key,
+    Key? key,
     this.controller,
     this.hint,
     this.bgColor = const Color(0x00ffffff),
@@ -52,6 +54,8 @@ class MTextField extends StatefulWidget {
     this.isObscureText = false,
     this.enable = true,
     this.enableInteractiveSelection = true,
+    this.focusNode,
+    this.textInputAction,
   }) : super(key: key);
 
   @override
@@ -59,7 +63,7 @@ class MTextField extends StatefulWidget {
 }
 
 class _MTextFieldState extends State<MTextField> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
   @override
   void initState() {
@@ -74,6 +78,7 @@ class _MTextFieldState extends State<MTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      textInputAction: widget.textInputAction,
       textAlign: widget.textAlign,
       autofocus: widget.autofocus,
       controller: _controller,
@@ -85,7 +90,9 @@ class _MTextFieldState extends State<MTextField> {
       enabled: widget.enable,
       inputFormatters: widget.inputFormatters,
       enableInteractiveSelection: widget.enableInteractiveSelection,
+      focusNode: widget.focusNode,
       decoration: InputDecoration(
+        isDense: true,
         fillColor: widget.bgColor,
         filled: true,
         hintText: widget.hint,
@@ -100,7 +107,7 @@ class _MTextFieldState extends State<MTextField> {
           widget.onChanged?.call(value);
           return;
         } else {
-          if (value.length > widget.limitLength) {
+          if (value.length > widget.limitLength!) {
             var resultStr = value.substring(0, widget.limitLength);
             _controller.text = resultStr;
             _controller.selection = TextSelection.fromPosition(

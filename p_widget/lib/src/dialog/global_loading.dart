@@ -10,7 +10,7 @@ const Duration _kWindowDuration = Duration(milliseconds: _windowPopupDuration);
 /// 全局 Loading
 /// ```dart
 /// GlobalLoading.navigatorKey = RouterUtils.navigatorKey
-/// 
+///
 /// GlobalLoading.showLoading();
 ///
 /// GlobalLoading.hideLoading();
@@ -18,7 +18,7 @@ const Duration _kWindowDuration = Duration(milliseconds: _windowPopupDuration);
 class GlobalLoading {
   static int showCnt = 0;
 
-  static GlobalKey<NavigatorState> navigatorKey;
+  static GlobalKey<NavigatorState>? navigatorKey;
 
   /// [forceLoading]: true: Android 下物理按钮无效， false: Android 下物理返回有效
   static void showLoading({
@@ -30,7 +30,7 @@ class GlobalLoading {
 
     final RelativeRect position = RelativeRect.fromLTRB(0, 0, 0, 0);
 
-    navigatorKey.currentState.push(_PopupWindowRoute(
+    navigatorKey!.currentState!.push(_PopupWindowRoute(
       position: position,
       mbarrierDismissible: false,
       color: Color(0x00ffffff),
@@ -81,7 +81,7 @@ class GlobalLoading {
     if (showCnt > 0) {
       showCnt--;
       if (showCnt <= 0) {
-        navigatorKey.currentState.pop();
+        navigatorKey!.currentState!.pop();
       }
     }
   }
@@ -91,7 +91,7 @@ class _PopupWindowRoute extends PopupRoute {
   _PopupWindowRoute({
     this.position,
     this.child,
-    this.elevation,
+    this.elevation = 0,
     this.barrierLabel,
     this.semanticLabel,
     this.duration,
@@ -109,18 +109,18 @@ class _PopupWindowRoute extends PopupRoute {
     );
   }
 
-  final RelativeRect position;
-  final Widget child;
+  final RelativeRect? position;
+  final Widget? child;
   final double elevation;
-  final String semanticLabel;
+  final String? semanticLabel;
   @override
-  final String barrierLabel;
-  final int duration;
+  final String? barrierLabel;
+  final int? duration;
   final MaterialType type;
 
   @override
   Duration get transitionDuration =>
-      duration == 0 ? _kWindowDuration : Duration(milliseconds: duration);
+      duration == 0 ? _kWindowDuration : Duration(milliseconds: duration!);
 
   bool mbarrierDismissible;
 
@@ -128,7 +128,7 @@ class _PopupWindowRoute extends PopupRoute {
   bool get barrierDismissible => mbarrierDismissible;
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   Color color;
 
@@ -141,11 +141,11 @@ class _PopupWindowRoute extends PopupRoute {
     return Builder(
       builder: (BuildContext context) {
         return CustomSingleChildLayout(
-          delegate: _PopupWindowLayout(position),
+          delegate: _PopupWindowLayout(position!),
           child: AnimatedBuilder(
             child: child,
             animation: animation,
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return Opacity(
                 opacity: opacity.evaluate(animation),
                 child: Material(

@@ -4,7 +4,8 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=2.8.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
@@ -12,6 +13,11 @@ dependencies:
 
   p_utils:
     path: ../p_utils
+
+  # p_utils:
+  #   git:  
+  #     url: git@codeup.aliyun.com:6170ccd210204867ecfd4f8e/flutter_lib/p_utils.git
+  #     ref: ee7f3eb8e33d7403c5feaa6c0af4ebe5a4b86cd6
 
 dev_dependencies:
   flutter_test:
