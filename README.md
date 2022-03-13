@@ -9,12 +9,12 @@ flutter_lib
 - p_widget: 基础组件
 - p_utils: 工具类
 - p_base: 基类
-- p_webview: WebView (不使用)
 - p_img_compress: 图片压缩
-- p_net: dio (不使用)
 - p_eth: TODO
 - p_rpc: tcp with msgpack
 
+
+- 创建 lib
 
 ```
 flutter create --template=package hello
