@@ -12,6 +12,7 @@ flutter_lib
 - p_img_compress: 图片压缩
 - p_eth: TODO
 - p_rpc: tcp with msgpack
+- p_hive: 数据存储
 
 
 #### 创建 lib
